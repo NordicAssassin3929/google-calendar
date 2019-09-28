@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a2b7099-0253-4d18-8ba1-b0508411eaf3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,11 +17,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1RTBAzVV8GtKJW63LqgQfbQtKzQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -62,7 +78,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569681065466</updated>
-      <workItem from="1569681068084" duration="1074000" />
+      <workItem from="1569681068084" duration="1563000" />
+      <workItem from="1569683194467" duration="10000" />
+      <workItem from="1569684082619" duration="2965000" />
+      <workItem from="1569691334362" duration="3839000" />
     </task>
     <servers />
   </component>
@@ -74,7 +93,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
