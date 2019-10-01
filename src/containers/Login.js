@@ -20,8 +20,18 @@ export function Login(props) {
                     'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events`,
                 })
             }).then( (response) => {
+                let now = new Date();
+                let today = (new Date()).toISOString();
+                let nextWeek = new Date();
+                nextWeek.setDate(now.getDate() + 10);
                 let events = response.result.items;
-                setEvents(events);
+                // const sortedEvents = events.filter(event => event.summary === "Lemax Test Cases");
+                const sortedEvents = events.filter(event =>
+                    //event.start.dateTime >= today
+                event.end.dateTime <= nextWeek
+                );
+                setEvents(sortedEvents);
+                //setEvents(events);
             }, function(reason) {
                 console.log(reason);
             });
@@ -29,22 +39,25 @@ export function Login(props) {
         gapi.load('client', start);
     }
 
+    function sortEvents(){
+        console.log(events);
+        // const sortedEvents = events.filter(event =>
+        //     event.start.dateTime = "2017-10-12T17:00:00+02:00"
+        // );
+        // setEvents(sortedEvents);
+    }
+
     return (
         <div>
             <Header />
-            {events.map(event => (
-                <ol key={event.id}>
-                    <li>
-                        {event.summary}
-                    </li>
-                    <li>
-                        {event.start.dateTime}
-                    </li>
-                    <li>
-                        {event.end.dateTime}
-                    </li>
-                </ol>
-            ))}
+            <button onClick={sortEvents}>Click me</button>
+            {/*{events.map(event => (*/}
+            {/*    <ol key={event.id}>*/}
+            {/*        {event.summary}*/}
+            {/*        {event.start.dateTime}*/}
+            {/*        {event.end.dateTime}*/}
+            {/*    </ol>*/}
+            {/*))}*/}
         </div>
     );
 }
