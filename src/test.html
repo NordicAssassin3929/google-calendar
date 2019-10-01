@@ -15,15 +15,15 @@
 
 <script type="text/javascript">
     // Client ID and API key from the Developer Console
-    var CLIENT_ID = '827593341333-d9nj159i990ehpjb5f750ns2ek39g3rf.apps.googleusercontent.com';
-    var API_KEY = 'AIzaSyCi-C4HrduRRyeyF5MXWibb5s4n1Eo0r6A';
+    var CLIENT_ID = '137344588964-ml4h2brlebpd0o1qf2ejp03279mqc0h8.apps.googleusercontent.com';
+    var API_KEY = 'AIzaSyBCiNHvQx2dXZDzOBTC7J2BAyd2dTaq1Yo';
 
     // Array of API discovery doc URLs for APIs used by the quickstart
     var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
-    var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+    var SCOPES = "https://www.googleapis.com/auth/calendar";
 
     var authorizeButton = document.getElementById('authorize_button');
     var signoutButton = document.getElementById('signout_button');
@@ -66,6 +66,8 @@
         if (isSignedIn) {
             authorizeButton.style.display = 'none';
             signoutButton.style.display = 'block';
+            listUpcomingEvents();
+            insertEvent();
             listUpcomingEvents();
         } else {
             authorizeButton.style.display = 'block';
@@ -130,6 +132,55 @@
             }
         });
     }
+
+    // Refer to the JavaScript quickstart on how to setup the environment:
+    // https://developers.google.com/calendar/quickstart/js
+    // Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
+    // stored credentials.
+
+    function insertEvent() {
+        var event = {
+            'summary': 'Google I/O 2015',
+            'location': '800 Howard St., San Francisco, CA 94103',
+            'description': 'A chance to hear more about Google\'s developer products.',
+            'start': {
+                'dateTime': '2019-10-10T09:00:00-07:00',
+                'timeZone': 'America/Los_Angeles'
+            },
+            'end': {
+                'dateTime': '2019-10-10T17:00:00-07:00',
+                'timeZone': 'America/Los_Angeles'
+            },
+            'recurrence': [
+                'RRULE:FREQ=DAILY;COUNT=2'
+            ],
+            'attendees': [
+                {'email': 'lpage@example.com'},
+                {'email': 'sbrin@example.com'}
+            ],
+            'reminders': {
+                'useDefault': false,
+                'overrides': [
+                    {'method': 'email', 'minutes': 24 * 60},
+                    {'method': 'popup', 'minutes': 10}
+                ]
+            }
+        };
+
+        var request = gapi.client.calendar.events.insert({
+            'calendarId': 'primary',
+            'resource': event
+        });
+
+        console.log(request);
+
+        request.execute(function (event) {
+            console.log('Event: ' + event);
+            console.log('Event html link: ' + event.htmlLink);
+            appendPre('Event created: ' + event.htmlLink);
+        });
+    }
+
 
 </script>
 

@@ -1,3 +1,6 @@
 export const
-    GOOGLE_API_KEY = 'AIzaSyCi-C4HrduRRyeyF5MXWibb5s4n1Eo0r6A',
-    CALENDAR_ID = '827593341333-t058si6pfn8t6j7fcdnt44dk9ugup3lq.apps.googleusercontent.com';
+    API_KEY = 'AIzaSyBCiNHvQx2dXZDzOBTC7J2BAyd2dTaq1Yo',
+    CLIENT_ID = '137344588964-ml4h2brlebpd0o1qf2ejp03279mqc0h8.apps.googleusercontent.com',
+    DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
+    SCOPES = "https://www.googleapis.com/auth/calendar",
+    CALENDAR_ID = "natanu1994@gmail.com";
