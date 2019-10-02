@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "gapi-script": "0.0.5",
+    "group-array": "^1.0.0",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "react-google-calendar-api": "^1.0.10",
