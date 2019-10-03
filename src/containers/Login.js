@@ -32,7 +32,7 @@ export function Login(props) {
 
                 sortedEvents = events.filter(event =>
                     event.start.dateTime >= today
-                    && event.end.dateTime <= nextWeek.toISOString()
+                    && event.start.dateTime <= nextWeek.toISOString()
                 );
                 setEvents(sortedEvents);
             }, function(reason) {
