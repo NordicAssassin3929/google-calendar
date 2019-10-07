@@ -5,6 +5,7 @@ import { gapi } from 'gapi-script';
 import { API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES, CALENDAR_ID } from '../config.js';
 import Event from "./Event";
 import {getAllEvents} from "../services/api";
+import AddEvent from "./AddEvent";
 
 export function Login() {
 
@@ -93,6 +94,7 @@ export function Login() {
         return gapi.client.init({
             'apiKey': API_KEY,
             'clientId': CLIENT_ID,
+            'discoveryDocs': DISCOVERY_DOCS,
             'scope': SCOPES
         });
     }
@@ -123,6 +125,7 @@ export function Login() {
                        event={event}
                        delEvent={delEvent}></Event>
             ))}
+            <AddEvent />
         </div>
     );
 }

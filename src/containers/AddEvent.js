@@ -7,17 +7,20 @@ function AddEvent(props) {
     const { register, handleSubmit, error } = useForm();
 
     function createEvent(data){
+            console.log(data);
+            const st = new Date(data.start);
+            const en = new Date(data.start);
             var event = {
                     'summary': data.summary,
-                    'location': data.description,
-                    'description': 'A chance to hear more about Google\'s developer products.',
+                    'location': data.location,
+                    'description': data.description,
                     'start': {
-                            'dateTime': '2015-05-28T09:00:00-07:00',
-                            'timeZone': 'America/Los_Angeles'
+                            'dateTime': st.toISOString(),
+                            'timeZone': data.timeZone
                     },
                     'end': {
-                            'dateTime': '2015-05-28T17:00:00-07:00',
-                            'timeZone': 'America/Los_Angeles'
+                            'dateTime': en.toISOString(),
+                            'timeZone': data.timeZone
                     }
             };
             var request = gapi.client.calendar.events.insert({
@@ -37,34 +40,60 @@ function AddEvent(props) {
                 type="text"
                 ref={register({
                         required: 'Summary is required!',
-                        validate: (value) => value.length > 5 || 'Too shirt'
+                        validate: (value) => value.length > 5 || 'Too short'
                 })}
+                name="summary"
             />
             <p>Location:</p>
             <input
                 type="text"
+                ref={register({
+                        required: 'Location is required!',
+                        validate: (value) => value.length > 5 || 'Too short'
+                })}
                 name="location"
             />
             <p>Description:</p>
             <input
                 type="text"
+                ref={register({
+                        required: 'Description is required!',
+                        validate: (value) => value.length > 5 || 'Too short'
+                })}
                 name="description"
             />
             <p>Start date time:</p>
             <input
-                type="date"
-                name="startDateTime"
+                type="datetime-local"
+                ref={register({
+                        required: 'Start date time is required!',
+                        validate: (value) => value.length > 5 || 'Too short'
+                })}
+                name="start"
             />
             <p>End date time:</p>
             <input
-                type="date"
-                name="endDateTime"
+                type="datetime-local"
+                ref={register({
+                        required: 'End date time is required!',
+                        validate: (value) => value.length > 5 || 'Too short'
+                })}
+                name="end"
             />
             <p>Timezone:</p>
             <input
                 type="text"
+                ref={register({
+                        required: 'Timezone is required!',
+                        validate: (value) => value.length > 5 || 'Too short'
+                })}
                 name="timezone"
             />
+                <br></br>
+            <button
+                type="submit">
+                    Add Event
+            </button>
         </form>
     );
 }
