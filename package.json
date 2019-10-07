@@ -10,6 +10,8 @@
     "react-google-calendar-api": "^1.0.10",
     "react-google-login": "^5.0.5",
     "react-google-oauth": "^1.0.0",
+    "react-hook-form": "^3.23.18",
+    "react-hooks-useform": "^0.1.61",
     "react-router": "^5.1.1",
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.2",

@@ -15,10 +15,14 @@ export function Login() {
     useEffect(() => {
         //allEvents = getEvents();
         getEvents();
-    });
+    },  [days]);
+
+    // useEffect(() => {
+    //     sortEvents();
+    // },[days]);
 
     useUpdateEffect(() => {
-        //sortEvents();
+        //  sortEvents();
     });
 
     // async function getEvents(){
@@ -27,32 +31,45 @@ export function Login() {
 
     function getEvents(){
         function start() {
-            gapi.client.init({
-                'apiKey': API_KEY
-            }).then(() => {
+            init()
+                .then(() => {
                 return gapi.client.request({
                     'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events`,
                 })
             }).then((res) => {
                 allEvents = res.result.items;
-                // let now = new Date();
-                // let today = (new Date()).toISOString();
-                // let nextWeek = new Date();
-                // nextWeek.setDate(now.getDate() + days);
-                //
-                // let sortedEvents = allEvents.sort((a, b) =>
-                // { return new Date(a.start.dateTime) - new Date(b.start.dateTime) });
-                //
-                // sortedEvents = allEvents.filter(event =>
-                //     event.start.dateTime >= today
-                //     && event.start.dateTime <= nextWeek.toISOString()
-                // );
-                // setEvents(sortedEvents);
-            }, (error) => {
-                console.log(error);
+                let now = new Date();
+                let today = (new Date()).toISOString();
+                let nextWeek = new Date();
+                nextWeek.setDate(now.getDate() + days);
+
+                let sortedEvents = allEvents.sort((a, b) =>
+                { return new Date(a.start.dateTime) - new Date(b.start.dateTime) });
+
+                sortedEvents = allEvents.filter(event =>
+                    event.start.dateTime >= today
+                    && event.start.dateTime <= nextWeek.toISOString()
+                );
+                setEvents(sortedEvents);
+            }, (reason) => {
+                console.log(reason);
             });
         }
         gapi.load('client', start);
+    }
+
+    function delEvent(id){
+        console.log(id);
+        init()
+            .then(() => {
+                return gapi.client.request({
+                    'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events/${id}`,
+                    'method': 'DELETE',
+                })
+            }).then((res) => {
+                console.log(res);
+        });
+        setEvents([...events.filter(event => event.id !== id)]);
     }
 
     function sortEvents(){
@@ -69,6 +86,15 @@ export function Login() {
             && event.start.dateTime <= nextWeek.toISOString()
         );
         setEvents(sortedEvents);
+        console.log(events);
+    }
+
+    function init(){
+        return gapi.client.init({
+            'apiKey': API_KEY,
+            'clientId': CLIENT_ID,
+            'scope': SCOPES
+        });
     }
 
     function day_1(){
@@ -84,27 +110,6 @@ export function Login() {
     function day_30(){
         setDays(30);
         sortEvents();
-    }
-
-    function deleteEvent(eventId) {
-
-        var params = {
-            calendarId: 'primary',
-            eventId: eventId,
-        };
-
-        calendar.events.delete(params, function(err) {
-            if (err) {
-                console.log('The API returned an error: ' + err);
-                return;
-            }
-            console.log('Event deleted.');
-        });
-    }
-
-    function delEvent(id){
-        console.log(id);
-        setEvents(events.filter(event => event.id !== id));
     }
 
     return (
