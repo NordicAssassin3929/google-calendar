@@ -6,6 +6,7 @@ import { CALENDAR_ID } from '../config.js';
 import Event from "./Event";
 import AddEvent from "./AddEvent";
 import { init } from "../services/api";
+import {useAsync} from 'react-use';
 
 export function Login() {
 
@@ -92,7 +93,7 @@ export function Login() {
         getEvents();
     }, [days]);
 
-    function getEvents(){
+    async function getEvents(){
         function start() {
             let now = new Date();
             let today = (new Date()).toISOString();
