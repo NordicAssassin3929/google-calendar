@@ -1,57 +1,40 @@
 import React, {useEffect, useState} from 'react';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
-import {Header} from '../components/Header';
+import { Header } from '../components/Header';
 import { gapi } from 'gapi-script';
-import { API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES, CALENDAR_ID } from '../config.js';
+import { CALENDAR_ID } from '../config.js';
 import Event from "./Event";
-import {getAllEvents} from "../services/api";
 import AddEvent from "./AddEvent";
+import { init } from "../services/api";
 
 export function Login() {
 
     const [events, setEvents] = useState([]);
     const [days, setDays] = useState(7);
     let allEvents = [];
+    let now = new Date();
+    let today = (new Date()).toISOString();
+    let nextWeek = new Date();
+    nextWeek.setDate(now.getDate() + days);
+    const next = nextWeek.toISOString();
 
     useEffect(() => {
-        //allEvents = getEvents();
         getEvents();
-    },  [days]);
-
-    // useEffect(() => {
-    //     sortEvents();
-    // },[days]);
-
-    useUpdateEffect(() => {
-        //  sortEvents();
-    });
-
-    // async function getEvents(){
-    //     await getAllEvents();
-    // }
+    }, [days]);
 
     function getEvents(){
         function start() {
             init()
                 .then(() => {
                 return gapi.client.request({
-                    'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events`,
+                    'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?timeMax=${next}&timeMin=${today}`,
                 })
             }).then((res) => {
-                allEvents = res.result.items;
-                let now = new Date();
-                let today = (new Date()).toISOString();
-                let nextWeek = new Date();
-                nextWeek.setDate(now.getDate() + days);
-
-                let sortedEvents = allEvents.sort((a, b) =>
-                { return new Date(a.start.dateTime) - new Date(b.start.dateTime) });
-
-                sortedEvents = allEvents.filter(event =>
-                    event.start.dateTime >= today
-                    && event.start.dateTime <= nextWeek.toISOString()
-                );
-                setEvents(sortedEvents);
+                // let now = new Date();
+                // let today = (new Date()).toISOString();
+                // let nextWeek = new Date();
+                // nextWeek.setDate(now.getDate() + days);
+                setEvents(res.result.items);
             }, (reason) => {
                 console.log(reason);
             });
@@ -73,45 +56,16 @@ export function Login() {
         setEvents([...events.filter(event => event.id !== id)]);
     }
 
-    function sortEvents(){
-        let now = new Date();
-        let today = (new Date()).toISOString();
-        let nextWeek = new Date();
-        nextWeek.setDate(now.getDate() + days);
-
-        let sortedEvents = allEvents.sort((a, b) =>
-        { return new Date(a.start.dateTime) - new Date(b.start.dateTime) });
-
-        sortedEvents = allEvents.filter(event =>
-            event.start.dateTime >= today
-            && event.start.dateTime <= nextWeek.toISOString()
-        );
-        setEvents(sortedEvents);
-        console.log(events);
-    }
-
-    function init(){
-        return gapi.client.init({
-            'apiKey': API_KEY,
-            'clientId': CLIENT_ID,
-            'discoveryDocs': DISCOVERY_DOCS,
-            'scope': SCOPES
-        });
-    }
-
     function day_1(){
         setDays(1);
-        sortEvents();
     }
 
     function day_7(){
         setDays(7);
-        sortEvents();
     }
 
     function day_30(){
         setDays(30);
-        sortEvents();
     }
 
     return (
