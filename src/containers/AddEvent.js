@@ -9,7 +9,7 @@ function AddEvent(props) {
     function createEvent(data){
             console.log(data);
             const st = new Date(data.start);
-            const en = new Date(data.start);
+            const en = new Date(data.end);
             var event = {
                     'summary': data.summary,
                     'location': data.location,

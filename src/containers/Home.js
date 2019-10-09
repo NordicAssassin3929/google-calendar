@@ -7,17 +7,21 @@ import Event from "./Event";
 import AddEvent from "./AddEvent";
 import { init } from "../services/api";
 
-export function Home(props) {
+export function Home() {
 
     const [events, setEvents] = useState([]);
     const [days, setDays] = useState(7);
 
     useEffect(() => {
         getEvents();
+        //gapi.load('client', getEvents);
     }, [days]);
 
+    // async function get(){
+    //     await getEvents();
+    // }
+
     function getEvents(){
-        function start() {
             let now = new Date();
             let today = (new Date()).toISOString();
             let nextWeek = new Date();
@@ -28,7 +32,8 @@ export function Home(props) {
                     return gapi.client.request({
                         'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?timeMax=${next}&timeMin=${today}`,
                     })
-                }).then((res) => {
+                })
+                .then((res) => {
                 const allEvents = res.result.items;
 
                 let sortedEvents = allEvents.sort((a, b) => {
@@ -39,8 +44,6 @@ export function Home(props) {
             }, (reason) => {
                 console.log(reason);
             });
-        }
-        gapi.load('client', start);
     }
 
     function delEvent(id){
@@ -75,7 +78,7 @@ export function Home(props) {
             <button onClick={day_1}>1 day</button>
             <button onClick={day_7}>7 days</button>
             <button onClick={day_30}>30 days</button>
-            {props.events.map(event => (
+            {events.map(event => (
                 <Event key={event.id}
                        event={event}
                        delEvent={delEvent}></Event>
