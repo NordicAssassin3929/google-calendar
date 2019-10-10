@@ -13,15 +13,29 @@ export function Home() {
     const [days, setDays] = useState(7);
 
     useEffect(() => {
-        getEvents();
+        //get();
+        doStuff();
+        //getEvents();
         //gapi.load('client', getEvents);
     }, [days]);
 
-    // async function get(){
-    //     await getEvents();
-    // }
+    async function get(){
+        await getEvents();
+    }
 
-    function getEvents(){
+    async function doStuff(){
+        let now = new Date();
+        let today = (new Date()).toISOString();
+        let nextWeek = new Date();
+        nextWeek.setDate(now.getDate() + days);
+        const next = nextWeek.toISOString();
+        const res = await gapi.client.request({
+            'path': `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?timeMax=${next}&timeMin=${today}`,
+        }).then((res) => res.json());
+        console.log(res);
+    }
+
+    async function getEvents(){
             let now = new Date();
             let today = (new Date()).toISOString();
             let nextWeek = new Date();
