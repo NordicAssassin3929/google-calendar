@@ -5,7 +5,6 @@ export function Header() {
     return (
         <div>
             <Link to="/">Login</Link>
-            <Link to="/home">Home</Link>
         </div>
     );
 }

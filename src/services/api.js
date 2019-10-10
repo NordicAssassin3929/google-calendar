@@ -1,5 +1,5 @@
 import { gapi } from 'gapi-script';
-import { API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES, CALENDAR_ID } from "../config.js";
+import { API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES } from "../config.js";
 
 export function init(){
     return gapi.client.init({

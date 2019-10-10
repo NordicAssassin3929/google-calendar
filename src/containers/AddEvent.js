@@ -1,10 +1,12 @@
 import React from 'react';
 import useForm from 'react-hook-form';
 import { gapi } from 'gapi-script';
-import { API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES, CALENDAR_ID } from '../config.js';
+import { CALENDAR_ID } from '../config.js';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from "@material-ui/core/Button";
 
-function AddEvent(props) {
-    const { register, handleSubmit, error } = useForm();
+function AddEvent() {
+    const { register, handleSubmit } = useForm();
 
     function createEvent(data){
             console.log(data);
@@ -33,14 +35,16 @@ function AddEvent(props) {
             });
     }
 
+    const classes = useStyles();
+
     return (
         <form onSubmit={handleSubmit(createEvent)}>
             <p>Summary:</p>
             <input
                 type="text"
                 ref={register({
-                        required: 'Summary is required!',
-                        validate: (value) => value.length > 5 || 'Too short'
+                    required: 'Location is required!',
+                    validate: (value) => value.length > 0 || 'Too short'
                 })}
                 name="summary"
             />
@@ -48,8 +52,8 @@ function AddEvent(props) {
             <input
                 type="text"
                 ref={register({
-                        required: 'Location is required!',
-                        validate: (value) => value.length > 5 || 'Too short'
+                    required: 'Location is required!',
+                    validate: (value) => value.length > 0 || 'Too short'
                 })}
                 name="location"
             />
@@ -58,7 +62,7 @@ function AddEvent(props) {
                 type="text"
                 ref={register({
                         required: 'Description is required!',
-                        validate: (value) => value.length > 5 || 'Too short'
+                        validate: (value) => value.length > 0 || 'Too short'
                 })}
                 name="description"
             />
@@ -67,7 +71,7 @@ function AddEvent(props) {
                 type="datetime-local"
                 ref={register({
                         required: 'Start date time is required!',
-                        validate: (value) => value.length > 5 || 'Too short'
+                        validate: (value) => value.length > 0 || 'Too short'
                 })}
                 name="start"
             />
@@ -76,7 +80,7 @@ function AddEvent(props) {
                 type="datetime-local"
                 ref={register({
                         required: 'End date time is required!',
-                        validate: (value) => value.length > 5 || 'Too short'
+                        validate: (value) => value.length > 0 || 'Too short'
                 })}
                 name="end"
             />
@@ -85,17 +89,27 @@ function AddEvent(props) {
                 type="text"
                 ref={register({
                         required: 'Timezone is required!',
-                        validate: (value) => value.length > 5 || 'Too short'
+                        validate: (value) => value.length > 0 || 'Too short'
                 })}
                 name="timezone"
             />
-                <br></br>
-            <button
-                type="submit">
-                    Add Event
-            </button>
+            <br></br>
+            <br></br>
+            <Button
+                type="submit"
+                variant="outlined"
+                className={classes.button}>
+                Add Event
+            </Button>
         </form>
     );
 }
+
+const useStyles = makeStyles(theme => ({
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
+}));
 
 export default AddEvent;

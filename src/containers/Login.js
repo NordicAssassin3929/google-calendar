@@ -1,15 +1,14 @@
 import React, {useEffect} from 'react';
-import { gapi } from 'gapi-script';
-import { init } from "../services/api";
+import {gapi} from 'gapi-script';
+import {init} from "../services/api";
+import {makeStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 export function Login(props) {
 
     useEffect(() => {
         handleClientLoad();
     });
-
-    var authorizeButton = document.getElementById('authorize_button');
-    var signoutButton = document.getElementById('signout_button');
 
     /**
      *  On load, called to load the auth2 library and API client library.
@@ -25,25 +24,18 @@ export function Login(props) {
     function initClient() {
         init()
             .then(function () {
-        }, function(error) {
-            appendPre(JSON.stringify(error, null, 2));
-        });
+            }, function (error) {
+                appendPre(JSON.stringify(error, null, 2));
+            });
     }
 
     /**
      *  Sign in the user upon button click.
      */
     function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
-        // need callback here !
-        props.history.push('/home');
-    }
-
-    /**
-     *  Sign out the user upon button click.
-     */
-    function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
+        gapi.auth2.getAuthInstance().signIn().then(() => {
+            props.history.push('/home');
+        });
     }
 
     /**
@@ -58,10 +50,23 @@ export function Login(props) {
         pre.appendChild(textContent);
     }
 
+    const classes = useStyles();
+
     return (
-        <div>
-            <button id="authorize-button" onClick={handleAuthClick}>Authorize</button>
-            <button id="signout-button" onClick={handleSignoutClick}>Sign Out</button>
-        </div>
+        <Button onClick={handleAuthClick}
+                variant="contained"
+                color="primary"
+                className={classes.button}>
+            Sign in
+        </Button>
     );
 }
+
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+    input: {
+        display: 'none',
+    },
+}));
